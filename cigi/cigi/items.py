@@ -13,3 +13,4 @@ class CigiItem(scrapy.Item):
     title = scrapy.Field()
     abstract = scrapy.Field()
     publishing_date = scrapy.Field()
+    pdf = scrapy.Field()

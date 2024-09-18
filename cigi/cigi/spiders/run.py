@@ -34,9 +34,10 @@ class RunSpider(scrapy.Spider):
     def parse_detail(self, response):
         cigiItem = response.meta['cigiItem']
         cigiItem['abstract'] = response.css('.paragraph-block p::text').get()
+        pdf_url = response.css('.social-share-list ~ a::attr(href)').get()
+        cigiItem['pdf'] = pdf_url.split('/')[-1]
         yield cigiItem
 
-        pdf_url = response.css('.social-share-list ~ a::attr(href)').get()
         yield Request(self.base_url + pdf_url, callback=self.save_pdf)
 
     def save_pdf(self, response):
