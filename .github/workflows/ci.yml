@@ -1,0 +1,40 @@
+name: Python Scrapy CI
+
+# 触发工作流的条件
+on:
+  push:
+    branches:
+      - main  # 当推送到 main 分支时触发
+  pull_request:
+    branches:
+      - main  # 当 PR 合并到 main 分支时触发
+
+# 定义工作流中的任务
+jobs:
+  build:
+    runs-on: ubuntu-latest  # 使用 Ubuntu 最新版本的 runner
+
+    steps:
+    # 检出仓库代码
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    # 设置 Python 3.11 环境
+    - name: Set up Python 3.11
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+
+    # 安装依赖项
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+
+    # 执行 Scrapy 爬虫并输出到 data.json
+    - name: Run Scrapy crawler
+      run: |
+        cd cigi
+        scrapy crawl run -o "data.json"
+
+
