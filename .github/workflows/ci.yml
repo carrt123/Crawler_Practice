@@ -36,19 +36,20 @@ jobs:
       run: |
         cd cigi
         scrapy crawl run -o "data.json"
+        pwd
 
 # 上传生成的 data.json 作为构建产物
     - name: Upload data.json
       uses: actions/upload-artifact@v3
       with:
         name: scraped-data
-        path: data.json
+        path: cigi/data.json
 
     # 上传生成的 PDF 文件（假设所有 PDF 文件都保存在 cigi_pdfs 目录中）
     - name: Upload PDF files
       uses: actions/upload-artifact@v3
       with:
         name: pdf-files
-        path: cigi_pdfs
+        path: cigi/cigi_pdfs
 
 
