@@ -28,7 +28,8 @@ class RunSpider(scrapy.Spider):
             cigiItem['publishing_date'] = item.get('publishing_date')
             yield Request(self.base_url + item.get('url'), callback=self.parse_detail, meta={'cigiItem': cigiItem})
         self.offset += self.limit
-        if self.offset < data['meta'].get('total_count'):
+        # if self.offset < data['meta'].get('total_count'):
+        if self.offset < 20:
             yield Request(self.url % self.offset, callback=self.parse)
 
     def parse_detail(self, response):
